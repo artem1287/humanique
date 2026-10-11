@@ -97,8 +97,7 @@
     </div>
     <span class="compare__tag compare__tag--a">Humanique</span>
     <span class="compare__tag compare__tag--b">Generic AI</span>
-    <div class="compare__line" id="compareLine"><div class="compare__grip">&#8596;</div></div>
-    <input class="compare__range" id="compareRange" type="range" min="0" max="100" value="50" aria-label="Drag to compare" />
+    <div class="compare__line"></div>
   </div>
 
   <div style="width: 1491px; height: 246px; left: 258px; top: 1485px; position: absolute; text-align: center; color: rgba(84.03, 198.61, 91.66, 0.90); font-size: 110px; font-family: Young Serif; font-weight: 400; letter-spacing: -2px; line-height: 103.40px; word-wrap: break-word">AI can code a website<br/>But it cant make it stand out</div>
@@ -156,16 +155,7 @@
     fit(); window.addEventListener('resize', fit);
   })();
 
-  // Before/after comparison slider.
-  (function () {
-    var range = document.getElementById('compareRange');
-    var top = document.getElementById('compareTop');
-    var line = document.getElementById('compareLine');
-    if (!range) return;
-    function set(v) { top.style.width = (100 - v) + '%'; line.style.left = v + '%'; }
-    range.addEventListener('input', function () { set(range.value); });
-    set(range.value);
-  })();
+  // Hero comparison is a fixed 50/50 split — both images locked in place.
 </script>
 </body>
 </html>
