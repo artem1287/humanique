@@ -19,8 +19,9 @@
       user-select: none; touch-action: none; background: #f5f3ec;
     }
     .compare img { display: block; width: 1381px; height: 695px; object-fit: cover; pointer-events: none; }
-    .compare__top { position: absolute; inset: 0; width: 50%; overflow: hidden; }
-    .compare__top img { width: 1381px; height: 695px; }
+    /* First image (hero-a) is the locked base; this overlay (hero-b) wipes in from the right. */
+    .compare__top { position: absolute; top: 0; right: 0; bottom: 0; width: 50%; overflow: hidden; }
+    .compare__top img { position: absolute; top: 0; right: 0; width: 1381px; height: 695px; }
     .compare__line {
       position: absolute; top: 0; bottom: 0; left: 50%; width: 3px;
       background: #fff; transform: translateX(-1.5px); box-shadow: 0 0 0 1px rgba(0,0,0,0.08);
@@ -90,9 +91,9 @@
 
   <!-- HERO IMAGE AREA -> before/after comparison slider (exact original coords) -->
   <div class="compare" id="compare" style="width: 1381px; height: 695px; left: 269px; top: 520px;">
-    <img src="assets/hero-b.png" alt="Generic AI-built site" />
+    <img src="assets/hero-a.png" alt="Humanique-crafted site" />
     <div class="compare__top" id="compareTop">
-      <img src="assets/hero-a.png" alt="Humanique-crafted site" />
+      <img src="assets/hero-b.png" alt="Generic AI-built site" />
     </div>
     <span class="compare__tag compare__tag--a">Humanique</span>
     <span class="compare__tag compare__tag--b">Generic AI</span>
@@ -161,7 +162,7 @@
     var top = document.getElementById('compareTop');
     var line = document.getElementById('compareLine');
     if (!range) return;
-    function set(v) { top.style.width = v + '%'; line.style.left = v + '%'; }
+    function set(v) { top.style.width = (100 - v) + '%'; line.style.left = v + '%'; }
     range.addEventListener('input', function () { set(range.value); });
     set(range.value);
   })();
