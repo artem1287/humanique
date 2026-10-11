@@ -25,10 +25,10 @@
       pointer-events: none; transition: opacity 0.3s ease; white-space: nowrap;
     }
     .compare.touched .compare__hint { opacity: 0; }
-    .compare img { display: block; width: 1381px; height: 695px; object-fit: cover; pointer-events: none; }
-    /* First image (hero-a) is the locked base; this overlay (hero-b) wipes in from the right. */
-    .compare__top { position: absolute; top: 0; right: 0; bottom: 0; width: 50%; overflow: hidden; }
-    .compare__top img { position: absolute; top: 0; right: 0; width: 1381px; height: 695px; }
+    /* Both images are stacked in the same spot and locked in place. */
+    .compare img { position: absolute; top: 0; left: 0; display: block; width: 1381px; height: 695px; object-fit: cover; pointer-events: none; }
+    /* The top image is cropped by the slider via clip-path, revealing the base beneath. */
+    .compare__over { will-change: clip-path; }
     .compare__line {
       position: absolute; top: 0; bottom: 0; left: 50%; width: 3px;
       background: #fff; transform: translateX(-1.5px); box-shadow: 0 0 0 1px rgba(0,0,0,0.08);
@@ -98,10 +98,8 @@
 
   <!-- HERO IMAGE AREA -> before/after comparison slider (exact original coords) -->
   <div class="compare" id="compare" style="width: 1381px; height: 695px; left: 269px; top: 520px;">
-    <img src="assets/hero-a.png" alt="Humanique-crafted site" />
-    <div class="compare__top" id="compareTop">
-      <img src="assets/hero-b.png" alt="Generic AI-built site" />
-    </div>
+    <img class="compare__base" src="assets/hero-a.png" alt="Humanique-crafted site" />
+    <img class="compare__over" id="compareOver" src="assets/hero-b.png" alt="Generic AI-built site" />
     <span class="compare__tag compare__tag--a">Humanique</span>
     <span class="compare__tag compare__tag--b">Generic AI</span>
     <div class="compare__line" id="compareLine"><div class="compare__grip">&#8596;</div></div>
@@ -167,11 +165,12 @@
   // Before/after slider — both image contents stay pinned; only the wipe moves.
   (function () {
     var range = document.getElementById('compareRange');
-    var top = document.getElementById('compareTop');
+    var over = document.getElementById('compareOver');
     var line = document.getElementById('compareLine');
     if (!range) return;
     var compare = document.getElementById('compare');
-    function set(v) { top.style.width = (100 - v) + '%'; line.style.left = v + '%'; }
+    // Crop the top image from its left edge up to v%, revealing the base image beneath.
+    function set(v) { over.style.clipPath = 'inset(0 0 0 ' + v + '%)'; line.style.left = v + '%'; }
     range.addEventListener('input', function () { compare.classList.add('touched'); set(range.value); });
     set(range.value);
 
