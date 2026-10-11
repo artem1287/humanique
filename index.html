@@ -66,6 +66,47 @@
     }
     @keyframes marquee { to { transform: translateX(-50%); } }
     @media (prefers-reduced-motion: reduce) { .marquee__track { animation: none; } }
+
+    /* ---------- blob CTA buttons (link to claude.ai) ---------- */
+    .btn-blob {
+      position: absolute; display: flex; align-items: center; justify-content: center;
+      color: #fff; font-family: Gabarito; font-weight: 500; font-size: 50px; line-height: 1;
+      text-decoration: none; cursor: pointer; text-align: center;
+      border-radius: 42% 58% 63% 37% / 45% 44% 56% 55%;
+      animation: blobMorph 14s ease-in-out infinite;
+      transition: transform 0.25s ease, filter 0.25s ease;
+      will-change: border-radius;
+    }
+    .btn-blob:hover { transform: scale(1.05); filter: brightness(1.05); }
+    .btn-blob:active { transform: scale(0.98); }
+    .btn-blob--green { background: #66CD6C; box-shadow: 0 16px 36px rgba(102,205,108,0.42); }
+    .btn-blob--gold  { background: #CCB063; box-shadow: 0 16px 36px rgba(204,176,99,0.42); animation-delay: -6s; }
+    @keyframes blobMorph {
+      0%,100% { border-radius: 42% 58% 63% 37% / 45% 44% 56% 55%; }
+      20%     { border-radius: 63% 37% 41% 59% / 56% 59% 41% 44%; }
+      40%     { border-radius: 38% 62% 58% 42% / 63% 38% 62% 37%; }
+      60%     { border-radius: 55% 45% 38% 62% / 41% 57% 43% 59%; }
+      80%     { border-radius: 47% 53% 60% 40% / 52% 43% 57% 48%; }
+    }
+
+    /* ---------- hero scroll-zoom ---------- */
+    .compare { transform-origin: 50% 50%; }
+
+    /* ---------- words slide + fade in (from lower, 50% -> 100% opacity) ---------- */
+    .reveal-up {
+      opacity: 0.5; transform: translateY(40px);
+      transition: opacity 0.75s cubic-bezier(0.22,0.61,0.36,1),
+                  transform 0.75s cubic-bezier(0.22,0.61,0.36,1);
+    }
+    .reveal-up.in { opacity: 1; transform: translateY(0); }
+
+    html { scroll-behavior: smooth; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal-up { opacity: 1 !important; transform: none !important; transition: none; }
+      .btn-blob { animation: none; }
+      html { scroll-behavior: auto; }
+    }
   </style>
 </head>
 <body>
@@ -75,10 +116,8 @@
   <div style="width: 2079px; height: 950px; left: -80px; top: 1394px; position: absolute; background: #E2F4DA"></div>
   <div style="width: 2415px; height: 512px; left: -421px; top: 3355px; position: absolute; background: linear-gradient(360deg, #F4F2DA 0%, rgba(255, 255, 255, 0.40) 100%); border-radius: 9999px"></div>
   <div style="width: 1920px; height: 1424px; left: 0px; top: -11px; position: absolute; background: white"></div>
-  <div style="width: 383px; height: 99px; left: 768px; top: 359px; position: absolute; background: #66CD6C"></div>
-  <div style="width: 383px; height: 99px; left: 768px; top: 359px; position: absolute; text-align: center; justify-content: center; display: flex; flex-direction: column; color: white; font-size: 50px; font-family: Gabarito; font-weight: 500; line-height: 53.67px; word-wrap: break-word">Get Started</div>
-  <div style="width: 382px; height: 99px; left: 771px; top: 3779px; position: absolute; background: #CCB063"></div>
-  <div style="width: 382px; height: 99px; left: 771px; top: 3779px; position: absolute; text-align: center; justify-content: center; display: flex; flex-direction: column; color: white; font-size: 50px; font-family: Gabarito; font-weight: 500; line-height: 53.67px; word-wrap: break-word">Get Started</div>
+  <a class="btn-blob btn-blob--green" href="https://claude.ai" target="_blank" rel="noopener" style="left: 768px; top: 359px; width: 383px; height: 99px;">Get Started</a>
+  <a class="btn-blob btn-blob--gold" href="https://claude.ai" target="_blank" rel="noopener" style="left: 771px; top: 3779px; width: 382px; height: 99px;">Get Started</a>
   <div style="width: 880px; height: 396px; left: -112px; top: 1995px; position: absolute; background: rgba(244, 241.83, 218, 0.30); border-radius: 9999px"></div>
   <div style="width: 1297px; height: 396px; left: 745px; top: 1845px; position: absolute; background: rgba(244, 241.83, 218, 0.30); border-radius: 9999px"></div>
   <div style="width: 1121px; height: 396px; left: 1089px; top: 2004px; position: absolute; background: rgba(244, 241.83, 218, 0.60); border-radius: 9999px"></div>
@@ -183,6 +222,82 @@
         set(frames[i++]);
       }, 420);
     }
+  })();
+
+  // Word reveals, hero scroll-zoom, and smooth (inertia) scrolling.
+  (function () {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var compare = document.getElementById('compare');
+
+    // ----- words slide/fade in on entry -----
+    var canvas = document.querySelector('.canvas-wrap > div');
+    var revealables = [];
+    if (canvas) {
+      Array.prototype.forEach.call(canvas.children, function (el) {
+        if (el.id === 'compare') return;
+        if (el.className && String(el.className).indexOf('marquee') !== -1) return;
+        if (el.tagName === 'IMG' || el.tagName === 'A') return;
+        if (!(el.textContent || '').trim()) return;   // skip background rects
+        el.classList.add('reveal-up');
+        revealables.push(el);
+      });
+    }
+    if ('IntersectionObserver' in window && !reduce) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+      revealables.forEach(function (el) { io.observe(el); });
+    } else {
+      revealables.forEach(function (el) { el.classList.add('in'); });
+    }
+
+    // ----- hero scroll-zoom: starts smaller, grows to dominate as you scroll -----
+    if (!compare) return;
+    if (reduce) { compare.style.transform = 'none'; return; }
+
+    var START = 0.72, END = 1.38;
+    function zoomEnd() { return Math.max(320, window.innerHeight * 0.85); }
+    function applyZoom(y) {
+      var t = Math.min(1, Math.max(0, y / zoomEnd()));
+      var e = 1 - Math.pow(1 - t, 3);                 // easeOutCubic
+      var s = START + (END - START) * e;
+      compare.style.transform = 'scale(' + s.toFixed(4) + ')';
+      compare.style.zIndex = t > 0.01 ? '60' : '';
+    }
+
+    // ----- inertia smooth scroll (desktop pointers only) -----
+    var coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+    var smooth = !coarse;
+    var target = window.pageYOffset, current = target, driving = false;
+    function maxScroll() { return Math.max(0, document.body.scrollHeight - window.innerHeight); }
+
+    if (smooth) {
+      window.addEventListener('wheel', function (ev) {
+        if (ev.ctrlKey) return;                        // let pinch-zoom through
+        ev.preventDefault();
+        var d = ev.deltaY * (ev.deltaMode === 1 ? 16 : 1);
+        target = Math.min(maxScroll(), Math.max(0, target + d));
+      }, { passive: false });
+      window.addEventListener('scroll', function () {
+        if (!driving) { target = current = window.pageYOffset; }
+      }, { passive: true });
+    }
+
+    function frame() {
+      if (smooth) {
+        var diff = target - current;
+        if (Math.abs(diff) > 0.5) { driving = true; current += diff * 0.12; window.scrollTo(0, current); }
+        else { current = target; driving = false; }
+      } else {
+        current = window.pageYOffset;
+      }
+      applyZoom(current);
+      requestAnimationFrame(frame);
+    }
+    applyZoom(current);
+    requestAnimationFrame(frame);
   })();
 </script>
 </body>
