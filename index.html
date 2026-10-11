@@ -89,9 +89,6 @@
       80%     { border-radius: 47% 53% 60% 40% / 52% 43% 57% 48%; }
     }
 
-    /* ---------- hero scroll-zoom ---------- */
-    .compare { transform-origin: 50% 50%; }
-
     /* ---------- words slide + fade in (from lower, 50% -> 100% opacity) ---------- */
     .reveal-up {
       opacity: 0.5; transform: translateY(40px);
@@ -100,12 +97,9 @@
     }
     .reveal-up.in { opacity: 1; transform: translateY(0); }
 
-    html { scroll-behavior: smooth; }
-
     @media (prefers-reduced-motion: reduce) {
       .reveal-up { opacity: 1 !important; transform: none !important; transition: none; }
       .btn-blob { animation: none; }
-      html { scroll-behavior: auto; }
     }
   </style>
 </head>
@@ -253,51 +247,6 @@
       revealables.forEach(function (el) { el.classList.add('in'); });
     }
 
-    // ----- hero scroll-zoom: starts smaller, grows to dominate as you scroll -----
-    if (!compare) return;
-    if (reduce) { compare.style.transform = 'none'; return; }
-
-    var START = 0.72, END = 1.38;
-    function zoomEnd() { return Math.max(320, window.innerHeight * 0.85); }
-    function applyZoom(y) {
-      var t = Math.min(1, Math.max(0, y / zoomEnd()));
-      var e = 1 - Math.pow(1 - t, 3);                 // easeOutCubic
-      var s = START + (END - START) * e;
-      compare.style.transform = 'scale(' + s.toFixed(4) + ')';
-      compare.style.zIndex = t > 0.01 ? '60' : '';
-    }
-
-    // ----- inertia smooth scroll (desktop pointers only) -----
-    var coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
-    var smooth = !coarse;
-    var target = window.pageYOffset, current = target, driving = false;
-    function maxScroll() { return Math.max(0, document.body.scrollHeight - window.innerHeight); }
-
-    if (smooth) {
-      window.addEventListener('wheel', function (ev) {
-        if (ev.ctrlKey) return;                        // let pinch-zoom through
-        ev.preventDefault();
-        var d = ev.deltaY * (ev.deltaMode === 1 ? 16 : 1);
-        target = Math.min(maxScroll(), Math.max(0, target + d));
-      }, { passive: false });
-      window.addEventListener('scroll', function () {
-        if (!driving) { target = current = window.pageYOffset; }
-      }, { passive: true });
-    }
-
-    function frame() {
-      if (smooth) {
-        var diff = target - current;
-        if (Math.abs(diff) > 0.5) { driving = true; current += diff * 0.12; window.scrollTo(0, current); }
-        else { current = target; driving = false; }
-      } else {
-        current = window.pageYOffset;
-      }
-      applyZoom(current);
-      requestAnimationFrame(frame);
-    }
-    applyZoom(current);
-    requestAnimationFrame(frame);
   })();
 </script>
 </body>
