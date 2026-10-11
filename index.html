@@ -3,158 +3,82 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Humanique — The Human Half of Your Great Website</title>
-  <meta name="description" content="AI can code a website, but it can't make it stand out. Humanique gives your vibe-coded site a unique, human-crafted design — editable with prompts, locally hosted, and yours to control." />
-
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>" />
-
+  <title>Humanique</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700&family=Gamja+Flower&family=Young+Serif&display=swap" rel="stylesheet" />
-
-  <link rel="stylesheet" href="styles.css" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #e9e9e9; }
+    /* Exact 1920 x 4278 design canvas, scaled to fit the viewport width */
+    .canvas-wrap { width: 1920px; margin: 0 auto; transform-origin: top center; }
+  </style>
 </head>
 <body>
-  <!-- ===================== NAV ===================== -->
-  <header class="nav" id="top">
-    <a class="nav__brand" href="#top">Humanique</a>
-    <nav class="nav__links" aria-label="Primary">
-      <a href="#problem">The Problem</a>
-      <a href="#compare">Compare</a>
-      <a href="#start">Get Started</a>
-    </nav>
-    <a href="#start" class="btn btn--sm btn--green">Get Started</a>
-  </header>
-
-  <main>
-    <!-- ===================== HERO ===================== -->
-    <section class="hero">
-      <p class="hero__eyebrow">Humanique:</p>
-      <h1 class="hero__title">
-        The <span class="script">Human</span> Half<br />of Your Great Website
-      </h1>
-      <p class="hero__sub">
-        AI builds the code. We build the soul — a one-of-a-kind design that
-        actually looks like you.
-      </p>
-      <a href="#start" class="btn btn--green">Get Started</a>
-
-      <div class="hero__mock" aria-hidden="true">
-        <div class="browser">
-          <div class="browser__bar">
-            <span></span><span></span><span></span>
-          </div>
-          <div class="browser__body">
-            <div class="mock-line mock-line--lg"></div>
-            <div class="mock-line mock-line--md"></div>
-            <div class="mock-grid">
-              <div class="mock-card"></div>
-              <div class="mock-card"></div>
-              <div class="mock-card"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== PROBLEM ===================== -->
-    <section class="problem" id="problem">
-      <h2 class="section-title section-title--green">
-        AI can code a website<br />but it can't make it stand out
-      </h2>
-      <p class="problem__caption">Thousands of sites like this on the internet</p>
-
-      <div class="lookalikes">
-        <div class="lookalike"></div>
-        <div class="lookalike"></div>
-        <div class="lookalike"></div>
-        <div class="lookalike"></div>
-      </div>
-      <p class="lookalikes__label">Looks Like Mine</p>
-    </section>
-
-    <!-- ===================== COMPARE ===================== -->
-    <section class="compare" id="compare">
-      <h2 class="section-title section-title--gold">You keep the control</h2>
-
-      <div class="plans">
-        <!-- Claude -->
-        <article class="plan">
-          <h3 class="plan__name">Claude</h3>
-          <ul class="plan__list">
-            <li class="plus">Editable with prompts</li>
-            <li class="plus">Locally hosted</li>
-            <li class="plus">Easy to control</li>
-            <li class="plus">Cheap</li>
-            <li class="minus">Identical to thousands of others</li>
-          </ul>
-        </article>
-
-        <!-- Humanique (featured) -->
-        <article class="plan plan--featured">
-          <h3 class="plan__name">Humanique</h3>
-          <ul class="plan__list">
-            <li class="plus">Editable with prompts</li>
-            <li class="plus">Locally hosted</li>
-            <li class="plus">Easy to control</li>
-            <li class="plus">Cheap</li>
-            <li class="plus">Unique</li>
-          </ul>
-          <button class="btn btn--select" type="button">Select</button>
-        </article>
-
-        <!-- Designer -->
-        <article class="plan">
-          <h3 class="plan__name">Designer</h3>
-          <ul class="plan__list">
-            <li class="plus">Unique</li>
-            <li class="minus">Expensive</li>
-            <li class="minus">Externally hosted</li>
-            <li class="minus">Not editable</li>
-          </ul>
-        </article>
-      </div>
-    </section>
-
-    <!-- ===================== CTA ===================== -->
-    <section class="cta" id="start">
-      <h2 class="section-title section-title--gold">
-        Stand out in the sea of vibe-coded sites
-      </h2>
-      <a href="#" class="btn btn--gold" data-cta>Get Started</a>
-
-      <form class="signup" hidden>
-        <label class="signup__label" for="email">Drop your email and we'll reach out</label>
-        <div class="signup__row">
-          <input
-            class="signup__input"
-            id="email"
-            type="email"
-            name="email"
-            placeholder="you@yourdomain.com"
-            required
-            autocomplete="email"
-          />
-          <button class="btn btn--gold btn--sm" type="submit">Notify me</button>
-        </div>
-        <p class="signup__msg" role="status" aria-live="polite"></p>
-      </form>
-    </section>
-  </main>
-
-  <!-- ===================== FOOTER ===================== -->
-  <footer class="footer">
-    <div class="footer__wordmark" aria-hidden="true">Humanique</div>
-    <div class="footer__meta">
-      <span>© <span id="year"></span> Humanique</span>
-      <nav class="footer__links" aria-label="Footer">
-        <a href="#problem">The Problem</a>
-        <a href="#compare">Compare</a>
-        <a href="#start">Get Started</a>
-      </nav>
-    </div>
-  </footer>
-
-  <script src="script.js"></script>
+<div class="canvas-wrap">
+<div style="width: 1920px; height: 4278px; position: relative; background: white; overflow: hidden">
+  <div style="width: 2079px; height: 2232px; left: 16px; top: 2358px; position: absolute; background: #F4F2DA"></div>
+  <div style="width: 2079px; height: 950px; left: -80px; top: 1394px; position: absolute; background: #E2F4DA"></div>
+  <div style="width: 2415px; height: 512px; left: -421px; top: 3355px; position: absolute; background: linear-gradient(360deg, #F4F2DA 0%, rgba(255, 255, 255, 0.40) 100%); border-radius: 9999px"></div>
+  <div style="width: 1920px; height: 1424px; left: 0px; top: -11px; position: absolute; background: white"></div>
+  <div style="width: 383px; height: 99px; left: 768px; top: 359px; position: absolute; background: #66CD6C"></div>
+  <div style="width: 383px; height: 99px; left: 768px; top: 359px; position: absolute; text-align: center; justify-content: center; display: flex; flex-direction: column; color: white; font-size: 50px; font-family: Gabarito; font-weight: 500; line-height: 53.67px; word-wrap: break-word">Get Started</div>
+  <div style="width: 382px; height: 99px; left: 771px; top: 3779px; position: absolute; background: #CCB063"></div>
+  <div style="width: 382px; height: 99px; left: 771px; top: 3779px; position: absolute; text-align: center; justify-content: center; display: flex; flex-direction: column; color: white; font-size: 50px; font-family: Gabarito; font-weight: 500; line-height: 53.67px; word-wrap: break-word">Get Started</div>
+  <div style="width: 880px; height: 396px; left: -112px; top: 1995px; position: absolute; background: rgba(244, 241.83, 218, 0.30); border-radius: 9999px"></div>
+  <div style="width: 1297px; height: 396px; left: 745px; top: 1845px; position: absolute; background: rgba(244, 241.83, 218, 0.30); border-radius: 9999px"></div>
+  <div style="width: 1121px; height: 396px; left: 1089px; top: 2004px; position: absolute; background: rgba(244, 241.83, 218, 0.60); border-radius: 9999px"></div>
+  <div style="width: 1121px; height: 396px; left: 887px; top: 2077px; position: absolute; background: rgba(244, 241.83, 218, 0.90); border-radius: 9999px"></div>
+  <div style="width: 1121px; height: 396px; left: -117px; top: 2091px; position: absolute; background: rgba(244, 241.83, 218, 0.90); border-radius: 9999px"></div>
+  <div style="width: 1121px; height: 396px; left: -295px; top: 1907px; position: absolute; background: rgba(244, 241.83, 218, 0.60); border-radius: 9999px"></div>
+  <div style="width: 1121px; height: 396px; left: 207px; top: 1962px; position: absolute; background: rgba(244, 241.83, 218, 0.60); border-radius: 9999px"></div>
+  <div style="width: 1701px; height: 514px; left: -295px; top: 751px; position: absolute; background: rgba(226, 244, 218, 0.50); border-radius: 9999px"></div>
+  <div style="width: 1701px; height: 514px; left: -231px; top: 520px; position: absolute; background: rgba(226, 244, 218, 0.30); border-radius: 9999px"></div>
+  <div style="width: 1701px; height: 514px; left: 887px; top: 458px; position: absolute; background: rgba(226, 244, 218, 0.30); border-radius: 9999px"></div>
+  <div style="width: 1701px; height: 514px; left: 555px; top: 670px; position: absolute; background: rgba(226, 244, 218, 0.50); border-radius: 9999px"></div>
+  <div style="width: 1701px; height: 514px; left: 464px; top: 842px; position: absolute; background: rgba(226, 244, 218, 0.70); border-radius: 9999px"></div>
+  <div style="width: 1701px; height: 514px; left: -277px; top: 927px; position: absolute; background: rgba(226, 244, 218, 0.70); border-radius: 9999px"></div>
+  <div style="width: 2133px; height: 514px; left: -137px; top: 1055px; position: absolute; background: #E2F4DA; border-radius: 9999px"></div>
+  <div style="width: 1121px; height: 300px; left: 369px; top: 84px; position: absolute; text-align: center"><span style="color: rgba(84.03, 198.61, 91.66, 0.90); font-size: 110px; font-family: Young Serif; font-weight: 400; line-height: 103.40px; word-wrap: break-word">The </span><span style="color: rgba(84.03, 198.61, 91.66, 0.90); font-size: 170px; font-family: Gamja Flower; font-weight: 400; line-height: 159.80px; word-wrap: break-word">Human</span><span style="color: rgba(84.03, 198.61, 91.66, 0.90); font-size: 150px; font-family: Young Serif; font-weight: 400; line-height: 141px; word-wrap: break-word"> </span><span style="color: rgba(84.03, 198.61, 91.66, 0.90); font-size: 110px; font-family: Young Serif; font-weight: 400; line-height: 103.40px; word-wrap: break-word">Half of Your Great Website</span></div>
+  <div style="width: 1121px; height: 300px; left: 369px; top: 49px; position: absolute; text-align: center; color: rgba(84.03, 198.61, 91.66, 0.90); font-size: 70px; font-family: Gamja Flower; font-weight: 400; line-height: 65.80px; word-wrap: break-word">Humanique:</div>
+  <img style="width: 1381px; height: 695px; left: 269px; top: 520px; position: absolute; border: 346px white solid" src="https://placehold.co/1381x695" />
+  <img style="width: 936px; height: 695px; left: 714px; top: 520px; position: absolute; border: 346px white solid" src="https://placehold.co/936x695" />
+  <div style="width: 1491px; height: 246px; left: 258px; top: 1485px; position: absolute; text-align: center; color: rgba(84.03, 198.61, 91.66, 0.90); font-size: 110px; font-family: Young Serif; font-weight: 400; line-height: 103.40px; word-wrap: break-word">AI can code a website<br/>But it cant make it stand out</div>
+  <img style="width: 589px; height: 340px; left: 365px; top: 1803px; position: absolute" src="https://placehold.co/589x340" />
+  <img style="width: 588px; height: 340px; left: 1055px; top: 1803px; position: absolute" src="https://placehold.co/588x340" />
+  <img style="width: 589px; height: 340px; left: -324px; top: 1803px; position: absolute" src="https://placehold.co/589x340" />
+  <img style="width: 589px; height: 340px; left: 1743px; top: 1803px; position: absolute" src="https://placehold.co/589x340" />
+  <div style="width: 1920px; height: 96px; left: 0px; top: 2179px; position: absolute; text-align: center; color: rgba(0, 0, 0, 0.45); font-size: 40px; font-family: Gabarito; font-weight: 500; text-decoration: underline; word-wrap: break-word">Looks Like Mine</div>
+  <div style="width: 379px; height: 429px; left: 233px; top: 2644px; position: absolute; background: #EBE7AE; border-radius: 28px"></div>
+  <div style="width: 379px; height: 429px; left: 1308px; top: 2641px; position: absolute; background: #EBE7AE; border-radius: 28px"></div>
+  <div style="width: 520px; height: 470px; left: 700px; top: 2641px; position: absolute; background: #EBE7AE; border-radius: 28px"></div>
+  <div style="width: 2384px; height: 517px; left: -230px; top: 3922px; position: absolute; text-align: center; color: #CCB063; font-size: 520px; font-family: Gamja Flower; font-weight: 400; line-height: 488.80px; word-wrap: break-word">Humanique</div>
+  <div style="width: 1491px; height: 209px; left: 214px; top: 2482px; position: absolute; text-align: center; color: #CCB063; font-size: 110px; font-family: Young Serif; font-weight: 400; line-height: 103.40px; word-wrap: break-word">You keep the control</div>
+  <div style="width: 1440px; height: 198px; left: 251px; top: 3537px; position: absolute; text-align: center; color: #CCB063; font-size: 110px; font-family: Young Serif; font-weight: 400; line-height: 103.40px; word-wrap: break-word">Stand out in the sea of vibe-coded sites</div>
+  <div style="width: 379px; height: 102px; left: 233px; top: 2686px; position: absolute; text-align: center; color: rgba(0, 0, 0, 0.40); font-size: 35px; font-family: Gabarito; font-weight: 500; word-wrap: break-word">Claude</div>
+  <div style="width: 331px; height: 413px; left: 257px; top: 2731px; position: absolute; text-align: center; color: rgba(0, 0, 0, 0.40); font-size: 25px; font-family: Gabarito; font-weight: 500; word-wrap: break-word">+ Editable with prompts<br/>+ Locally hosted<br/>+ Easy to control<br/>+ Cheap<br/>− Identical to thousands of others<br/><br/>   <br/>   <br/></div>
+  <div style="width: 445px; height: 414px; left: 731px; top: 2747px; position: absolute; text-align: center; color: rgba(0, 0, 0, 0.40); font-size: 35px; font-family: Gabarito; font-weight: 500; word-wrap: break-word">+ Editable with prompts<br/>+ Locally hosted<br/>+ Easy to control<br/>+ Cheap<br/>+ Unique<br/>   <br/>   <br/></div>
+  <div style="width: 379px; height: 413px; left: 1308px; top: 2737px; position: absolute; text-align: center; color: rgba(0, 0, 0, 0.40); font-size: 25px; font-family: Gabarito; font-weight: 500; word-wrap: break-word">+ Unique<br/>− Expensive<br/>− Externally hosted<br/>− Not editable<br/>   <br/>   <br/></div>
+  <div style="width: 1920px; height: 102px; left: 0px; top: 2686px; position: absolute; text-align: center; color: rgba(0, 0, 0, 0.40); font-size: 45px; font-family: Gabarito; font-weight: 500; word-wrap: break-word">Humanique</div>
+  <div style="width: 379px; height: 102px; left: 1308px; top: 2686px; position: absolute; text-align: center; color: rgba(0, 0, 0, 0.40); font-size: 35px; font-family: Gabarito; font-weight: 500; word-wrap: break-word">Designer</div>
+  <div style="width: 1920px; height: 69px; left: 0px; top: 1753px; position: absolute; text-align: center; color: rgba(0, 0, 0, 0.45); font-size: 30px; font-family: Gabarito; font-weight: 400; line-height: 28.20px; letter-spacing: 0.30px; word-wrap: break-word">Thousands of sites like this on the internet</div>
+  <div style="width: 233px; height: 50px; left: 1687px; top: 2714px; position: absolute; background: #D9D9D9"></div>
+  <div style="width: 314px; height: 78px; left: 802px; top: 2995px; position: absolute; background: #8D8B68; border-radius: 19px"></div>
+  <div style="width: 445px; height: 415px; left: 737px; top: 3007px; position: absolute; text-align: center; color: #F4F2DA; font-size: 45px; font-family: Gabarito; font-weight: 500; word-wrap: break-word">Select</div>
+</div>
+</div>
+<script>
+  // Scale the fixed 1920px canvas down to fit narrower viewports (pixel-exact, just zoomed).
+  (function () {
+    var wrap = document.querySelector('.canvas-wrap');
+    function fit() {
+      var scale = Math.min(1, window.innerWidth / 1920);
+      wrap.style.transform = 'scale(' + scale + ')';
+      document.body.style.height = (4278 * scale) + 'px';
+    }
+    fit();
+    window.addEventListener('resize', fit);
+  })();
+</script>
 </body>
 </html>
