@@ -16,8 +16,15 @@
     .compare {
       position: absolute; overflow: hidden; border-radius: 18px;
       box-shadow: 0 30px 70px rgba(0,0,0,0.12), 0 6px 18px rgba(0,0,0,0.06);
-      user-select: none; touch-action: none; background: #f5f3ec;
+      user-select: none; touch-action: none; background: #f5f3ec; cursor: ew-resize;
     }
+    .compare__hint {
+      position: absolute; left: 50%; bottom: 24px; transform: translateX(-50%);
+      padding: 10px 22px; border-radius: 999px; background: rgba(40,40,40,0.78);
+      color: #fff; font-family: Gabarito; font-weight: 600; font-size: 22px;
+      pointer-events: none; transition: opacity 0.3s ease; white-space: nowrap;
+    }
+    .compare.touched .compare__hint { opacity: 0; }
     .compare img { display: block; width: 1381px; height: 695px; object-fit: cover; pointer-events: none; }
     /* First image (hero-a) is the locked base; this overlay (hero-b) wipes in from the right. */
     .compare__top { position: absolute; top: 0; right: 0; bottom: 0; width: 50%; overflow: hidden; }
@@ -98,6 +105,7 @@
     <span class="compare__tag compare__tag--a">Humanique</span>
     <span class="compare__tag compare__tag--b">Generic AI</span>
     <div class="compare__line" id="compareLine"><div class="compare__grip">&#8596;</div></div>
+    <span class="compare__hint">&#8596; Drag to compare</span>
     <input class="compare__range" id="compareRange" type="range" min="0" max="100" value="50" aria-label="Drag to compare" />
   </div>
 
@@ -162,9 +170,20 @@
     var top = document.getElementById('compareTop');
     var line = document.getElementById('compareLine');
     if (!range) return;
+    var compare = document.getElementById('compare');
     function set(v) { top.style.width = (100 - v) + '%'; line.style.left = v + '%'; }
-    range.addEventListener('input', function () { set(range.value); });
+    range.addEventListener('input', function () { compare.classList.add('touched'); set(range.value); });
     set(range.value);
+
+    // One-time nudge on load so it's clearly a draggable slider.
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduce) {
+      var frames = [50, 38, 62, 50], i = 0;
+      var t = setInterval(function () {
+        if (i >= frames.length || compare.classList.contains('touched')) { clearInterval(t); set(50); return; }
+        set(frames[i++]);
+      }, 420);
+    }
   })();
 </script>
 </body>
