@@ -72,21 +72,21 @@
       position: absolute; display: flex; align-items: center; justify-content: center;
       color: #fff; font-family: Gabarito; font-weight: 500; font-size: 50px; line-height: 1;
       text-decoration: none; cursor: pointer; text-align: center;
-      border-radius: 42% 58% 63% 37% / 45% 44% 56% 55%;
-      animation: blobMorph 14s ease-in-out infinite;
-      transition: transform 0.25s ease, filter 0.25s ease;
-      will-change: border-radius;
+      /* 7-point organic blob, slowly reshaping; no glow or shadow */
+      clip-path: polygon(50% 2%, 90% 17%, 99% 58%, 75% 97%, 30% 96%, 2% 61%, 13% 20%);
+      animation: blobMorph7 14s ease-in-out infinite;
+      transition: transform 0.25s ease;
+      will-change: clip-path;
     }
-    .btn-blob:hover { transform: scale(1.05); filter: brightness(1.05); }
+    .btn-blob:hover { transform: scale(1.05); }
     .btn-blob:active { transform: scale(0.98); }
-    .btn-blob--green { background: #66CD6C; box-shadow: 0 16px 36px rgba(102,205,108,0.42); }
-    .btn-blob--gold  { background: #CCB063; box-shadow: 0 16px 36px rgba(204,176,99,0.42); animation-delay: -6s; }
-    @keyframes blobMorph {
-      0%,100% { border-radius: 42% 58% 63% 37% / 45% 44% 56% 55%; }
-      20%     { border-radius: 63% 37% 41% 59% / 56% 59% 41% 44%; }
-      40%     { border-radius: 38% 62% 58% 42% / 63% 38% 62% 37%; }
-      60%     { border-radius: 55% 45% 38% 62% / 41% 57% 43% 59%; }
-      80%     { border-radius: 47% 53% 60% 40% / 52% 43% 57% 48%; }
+    .btn-blob--green { background: #66CD6C; }
+    .btn-blob--gold  { background: #CCB063; animation-delay: -6s; }
+    @keyframes blobMorph7 {
+      0%,100% { clip-path: polygon(50% 2%, 90% 17%, 99% 58%, 75% 97%, 30% 96%, 2% 61%, 13% 20%); }
+      25%     { clip-path: polygon(45% 4%, 87% 23%, 97% 66%, 69% 95%, 25% 92%, 4% 55%, 18% 15%); }
+      50%     { clip-path: polygon(55% 3%, 93% 15%, 96% 55%, 79% 98%, 23% 97%, 1% 64%, 9% 25%); }
+      75%     { clip-path: polygon(48% 5%, 89% 20%, 98% 62%, 72% 96%, 28% 94%, 3% 58%, 15% 18%); }
     }
 
     /* ---------- words slide + fade in (from lower, 50% -> 100% opacity) ---------- */
