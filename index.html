@@ -275,13 +275,14 @@
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var FULL_W = 1381, START = (FULL_W - 400) / FULL_W;   // ~0.7103 → 400px narrower
     function wrapScale() { return Math.min(1, window.innerWidth / 1920); }
-    // growth completes about when the slider's center reaches the viewport.
-    function growDist() { return Math.max(350, (554 + 695 / 2) * wrapScale()); }
+    // full size exactly when the slider's center reaches the center of the screen.
+    function target() { return (554 + 695 / 2) * wrapScale() - window.innerHeight / 2; }
     var raf = 0;
     function update() {
       raf = 0;
       if (reduce) { compare.style.transform = ''; return; }
-      var p = Math.min(1, Math.max(0, window.pageYOffset / growDist()));
+      var T = target();
+      var p = T <= 0 ? 1 : Math.min(1, Math.max(0, window.pageYOffset / T));
       var e = 1 - Math.pow(1 - p, 2);                      // easeOut
       var s = START + (1 - START) * e;
       compare.style.transform = 'scale(' + s.toFixed(4) + ')';
