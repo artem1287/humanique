@@ -266,7 +266,30 @@
     } else {
       revealables.forEach(function (el) { el.classList.add('in'); });
     }
+  })();
 
+  // Hero slider starts 400px narrower and grows to full size as you scroll to it.
+  (function () {
+    var compare = document.getElementById('compare');
+    if (!compare) return;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var FULL_W = 1381, START = (FULL_W - 400) / FULL_W;   // ~0.7103 → 400px narrower
+    function wrapScale() { return Math.min(1, window.innerWidth / 1920); }
+    // growth completes about when the slider's center reaches the viewport.
+    function growDist() { return Math.max(350, (554 + 695 / 2) * wrapScale()); }
+    var raf = 0;
+    function update() {
+      raf = 0;
+      if (reduce) { compare.style.transform = ''; return; }
+      var p = Math.min(1, Math.max(0, window.pageYOffset / growDist()));
+      var e = 1 - Math.pow(1 - p, 2);                      // easeOut
+      var s = START + (1 - START) * e;
+      compare.style.transform = 'scale(' + s.toFixed(4) + ')';
+    }
+    function onScroll() { if (!raf) raf = requestAnimationFrame(update); }
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
   })();
 </script>
 </body>
